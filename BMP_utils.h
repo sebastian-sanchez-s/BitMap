@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>      // FILE
+#include <stdlib.h>     // malloc, free
 
 #include "BMP_structure.h"
 
@@ -45,6 +44,7 @@ void BMP_save_without_free(struct BMP * image, char * filename) {
     fwrite(&image -> fileheader, sizeof(image -> fileheader), 1, output);
     fwrite(&image -> infoheader, sizeof(image -> infoheader), 1, output);
     fwrite((char *) image -> pixel_data, image -> infoheader.image_size, 1, output);
+
     fclose(output);
 }
 
