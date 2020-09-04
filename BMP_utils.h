@@ -1,24 +1,26 @@
 #include <stdio.h>      // FILE
 #include <stdlib.h>     // malloc, free
 
-#include "BMP_structure.h"
 
-struct BMP * BMP_create(int w, int h, int d) {
+#include "BMP_structure.h"
+#include "BMP_error.h"
+
+
+struct BMP * BMP_create(int width, int height, int color_depth) {
     struct BMP * image = malloc(sizeof(struct BMP));
 
     if (!image) 
     {
-        // some error msg
-        return NULL;
+        BMP_perror("Cannot create image");
     }
 
     image -> infoheader.size = 40;
     
     image -> infoheader.color_planes = 1;
     
-    image -> infoheader.width = w;
-    image -> infoheader.height = h;
-    image -> infoheader.bits_per_pixel = d; 
+    image -> infoheader.width = width;
+    image -> infoheader.height = height;
+    image -> infoheader.color_depth = color_depth; 
     
     int wiB = ((image -> infoheader.width * image -> infoheader.bits_per_pixel+31)/32)*4;
     image -> infoheader.image_size = wiB * image -> infoheader.height;
@@ -31,8 +33,7 @@ struct BMP * BMP_create(int w, int h, int d) {
 
     if (!image -> pixel_data) 
     {
-        // some errror
-        return NULL;
+        BMP_perror("Cannot create pixel data");    
     }
    
     return image;
