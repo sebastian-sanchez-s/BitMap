@@ -1,12 +1,14 @@
 #include <stdio.h>      // FILE
 #include <stdlib.h>     // malloc, free
+#include <string.h>     // strndup
+#include <stdint.h>
 
 
 #include "BMP_structure.h"
 #include "BMP_error.h"
 
 
-struct BMP * BMP_create(int width, int height, int color_depth) {
+struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth) {
     struct BMP * image = malloc(sizeof(struct BMP));
 
     if (!image) 
@@ -22,7 +24,7 @@ struct BMP * BMP_create(int width, int height, int color_depth) {
     image -> infoheader.height = height;
     image -> infoheader.color_depth = color_depth; 
     
-    int wiB = ((image -> infoheader.width * image -> infoheader.bits_per_pixel+31)/32)*4;
+    int32_t wiB = ((image -> infoheader.width * image -> infoheader.color_depth+31)/32)*4;
     image -> infoheader.image_size = wiB * image -> infoheader.height;
     
     image -> fileheader.type = 0x4d42;
@@ -39,7 +41,7 @@ struct BMP * BMP_create(int width, int height, int color_depth) {
     return image;
 }
 
-void BMP_save_without_free(struct BMP * image, char * filename) {
+void BMP_save_without_free(struct BMP * image, const char * filename) {
     FILE *output = fopen(filename, "wb");
 
     if (!output)
@@ -61,3 +63,11 @@ void BMP_save(struct BMP * image, char * filename) {
     free(image);
 }
 
+void BMP_set_pixel(struct BMP * image, int row, int col, const char * color)
+{
+    int32_t wiB = ((image -> infoheader.width * image -> infoheader.color_depth+31)/32)*4;
+    uint16_t depth = image -> infoheader.color_depth / 8;
+    
+    for (int d = 0; d < depth; d++) 
+        image -> pixel_data[row * wiB + col * depth + d] = color[d];
+}
