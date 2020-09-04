@@ -42,6 +42,11 @@ struct BMP * BMP_create(int width, int height, int color_depth) {
 void BMP_save_without_free(struct BMP * image, char * filename) {
     FILE *output = fopen(filename, "wb");
 
+    if (!output)
+    {
+        BMP_perror("Cannot create file");
+    }
+
     fwrite(&image -> fileheader, sizeof(image -> fileheader), 1, output);
     fwrite(&image -> infoheader, sizeof(image -> infoheader), 1, output);
     fwrite((char *) image -> pixel_data, image -> infoheader.image_size, 1, output);
@@ -55,3 +60,4 @@ void BMP_save(struct BMP * image, char * filename) {
     free(image -> pixel_data);
     free(image);
 }
+
