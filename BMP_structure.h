@@ -14,7 +14,7 @@ struct InfoHeader {
     int32_t  width;
     int32_t  height;
     uint16_t color_planes;
-    uint16_t bits_per_pixel;
+    uint16_t color_depth;
     uint32_t compression_method;
     uint32_t image_size;
     int32_t  horizontal_resolution;
