@@ -66,7 +66,7 @@ void BMP_save(struct BMP * image, char * filename) {
 void BMP_set_pixel(struct BMP * image, int row, int col, const char * color)
 {
     int32_t wiB = ((image -> infoheader.width * image -> infoheader.color_depth+31)/32)*4;
-    uint16_t depth = image -> infoheader.color_depth / 8;
+    uint16_t depth = (image -> infoheader.color_depth + 7) / 8;
     
     for (int d = 0; d < depth; d++) 
         image -> pixel_data[row * wiB + col * depth + d] = color[d];
