@@ -1,11 +1,11 @@
 #include <stdio.h>      // FILE
 #include <stdlib.h>     // malloc, free
 #include <string.h>     // strndup
-#include <stdint.h>
+#include <stdint.h>     // Exact size integers
 
 
-#include "BMP_structure.h"
-#include "BMP_error.h"
+#include "BMP_structure.h"  // struct BMP
+#include "BMP_error.h"      // BMP_perror
 
 
 struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth) {
