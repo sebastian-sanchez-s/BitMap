@@ -1,11 +1,6 @@
 #include <stdint.h>
 
-// Declarations
-struct _BMP;
-struct _FILEHEADER;
-struct _BITMAPINFOHEADER;
-struct _BITMAPV5HEADER;
-
+#pragma pack(push, 1)
 
 // Definitions
 enum DIB_TYPES {
@@ -13,17 +8,34 @@ enum DIB_TYPES {
     BITMAPV5HEADER
 };
 
+/* Colors LIMITS */
 
-#define BMP_SIGNATURE       0x4d42
-#define FILEHEADER_SIZE     14
+#define MAX_COLOR16 31
+struct Color16 {
+    unsigned int red:5;
+    unsigned int green:5;
+    unsigned int blue:5;
+    unsigned int alpha:1;
+};
+
+#define MAX_COLOR24 255
+struct Color24 {
+    unsigned int red:8;
+    unsigned int green:8;
+    unsigned int blue:8;
+    unsigned int alpha:8;
+};
+
+
+/* BMP structure itself */
+#define BMP_SIGNATURE           0x4d42
+#define FILEHEADER_SIZE         14
 
 #define BITMAPINFOHEADER_SIZE   40
 #define BITMAPV5HEADER_SIZE     124
 
-#define DEFAULT_COLOR_DEPTH 24
-#define DEFAULT_COLOR_PLANE 1
-
-#pragma pack(push, 1)
+#define DEFAULT_COLOR_DEPTH     24
+#define DEFAULT_COLOR_PLANE     1
 
 struct _BMP {
     struct _FILEHEADER * fh;

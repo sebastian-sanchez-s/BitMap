@@ -1,5 +1,5 @@
 #include <stdio.h>      // FILE
-#include <string.h>     // menset
+#include <string.h>     // memset, memcpy
 
 #include "BMP.h"        // struct _BMP, enum DIB_TYPES, getter declarations
 #include "BMP_lib.h"    // BMP_malloc
@@ -93,15 +93,12 @@ void BMP_save(struct _BMP * image, char * filename) {
     free(image);
 }
 
-void BMP_set_pixel(struct _BMP * image, int row, int col, const char * color)
+void BMP_set_pixel(struct _BMP * image, int row, int col, void * color)
 {
     int32_t wiB = get_width_in_bytes(image);
     uint16_t depth = (get_color_depth(image) + 7) / 8;
     
-    for (int d = 0; d < depth; d++) { 
-        image -> pixel_data[row * wiB + col * depth + d] = color[d];
-
-    }
+    memcpy(image -> pixel_data + row * wiB + col * depth, color, depth);
 }
 
 
