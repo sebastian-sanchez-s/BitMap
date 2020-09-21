@@ -32,7 +32,7 @@ struct _BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, en
         printf("\n Horizontal resolution: 0x%x", get_horizontal_resolution(image));
         printf("\n Vertica resolution: 0x%x", get_vertical_resolution(image));
         printf("\n Ncolors: 0x%x", get_ncolors(image));
-        printf("\n Important colors: 0x%x", get_important_colors(image));
+        printf("\n Important colors: 0x%x\n", get_important_colors(image));
     }
     return image;
 }

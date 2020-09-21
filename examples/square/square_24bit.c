@@ -1,4 +1,4 @@
-#include "../../../BMP.c" // looks awfull 
+#include "../../BMP.c" // looks awfull 
 
 int main() {
     struct _BMP * image = BMP_create(200, 200, 24, BITMAPINFOHEADER);
