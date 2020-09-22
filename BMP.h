@@ -10,7 +10,7 @@ enum DIB_TYPES {
 
 /* Colors LIMITS */
 
-#define MAX_COLOR16 16 
+#define MAX_COLOR16 31 
 struct Color16 {
     unsigned int blue:5;
     unsigned int green:5;
@@ -18,7 +18,7 @@ struct Color16 {
     unsigned int alpha:1;
 };
 
-#define MAX_COLOR24 128
+#define MAX_COLOR24 255 
 struct Color24 {
     unsigned int blue:8;
     unsigned int green:8;
