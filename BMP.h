@@ -23,7 +23,6 @@ struct Color24 {
     unsigned int blue:8;
     unsigned int green:8;
     unsigned int red:8;
-    unsigned int alpha:8;
 };
 
 
