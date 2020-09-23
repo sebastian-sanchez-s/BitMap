@@ -16,6 +16,14 @@ struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, enu
     memset(image -> pixel_data, 0, BMP_get_image_size(image));
    
     if (DEBUG){
+        show_feedback(image);
+    }
+
+    return image;
+}
+
+void show_feedback(struct BMP * image)
+{
         printf("Image header data in Hex");
         printf("\nFileheader");
         printf("\n Signature: 0x%x", BMP_SIGNATURE);
@@ -33,8 +41,6 @@ struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, enu
         printf("\n Vertica resolution: 0x%x", BMP_get_vertical_resolution(image));
         printf("\n Ncolors: 0x%x", BMP_get_ncolors(image));
         printf("\n Important colors: 0x%x\n", BMP_get_important_colors(image));
-    }
-    return image;
 }
 
 void * init_infoheader(enum DIB_TYPES dib_type) {

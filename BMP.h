@@ -107,6 +107,7 @@ struct BMP * BMP_create(int32_t, int32_t, uint16_t, enum DIB_TYPES);
 void * init_infoheader(enum DIB_TYPES); 
 void setup_infoheader(struct BMP *, int32_t, int32_t, uint16_t, enum DIB_TYPES); 
 void setup_fileheader(struct BMP *);
+void show_feedback(struct BMP *);
 
 // Setters and Getters
 int32_t BMP_get_width_in_bytes(struct BMP *);
