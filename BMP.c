@@ -1,38 +1,38 @@
 #include <stdio.h>      // FILE
 #include <string.h>     // memset, memcpy
 
-#include "BMP.h"        // struct _BMP, enum DIB_TYPES, getter declarations
+#include "BMP.h"        // struct BMP, enum DIB_TYPES, getter declarations
 #include "BMP_lib.h"    // BMP_malloc
 
 int DEBUG = 1;
 
-struct _BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, enum DIB_TYPES dib_type) {
-    struct _BMP * image = BMP_malloc(sizeof(struct _BMP), "Cannot create image");
+struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, enum DIB_TYPES dib_type) {
+    struct BMP * image = BMP_malloc(sizeof(struct BMP), "Cannot create image");
 
     setup_infoheader(image, width, height, color_depth, dib_type);
     setup_fileheader(image);
 
-    image -> pixel_data = BMP_malloc(get_image_size(image), "Cannot create pixel data");
-    memset(image -> pixel_data, 0, get_image_size(image));
+    image -> pixel_data = BMP_malloc(BMP_get_image_size(image), "Cannot create pixel data");
+    memset(image -> pixel_data, 0, BMP_get_image_size(image));
    
     if (DEBUG){
         printf("Image header data in Hex");
         printf("\nFileheader");
         printf("\n Signature: 0x%x", BMP_SIGNATURE);
-        printf("\n Fileheader size: 0x%x", FILEHEADER_SIZE);
-        printf("\n Infoheader size: 0x%x", get_info_header_size(image));
-        printf("\n Imagesize: 0x%x", get_image_size(image));
+        printf("\n Fileheader size: 0x%x", BMP_FILEHEADER_SIZE);
+        printf("\n Infoheader size: 0x%x", BMP_get_info_header_size(image));
+        printf("\n Imagesize: 0x%x", BMP_get_image_size(image));
         printf("\nInfoheader");
-        printf("\n Size: 0x%x", get_info_header_size(image));
-        printf("\n Width: 0x%x", get_width(image));
-        printf("\n Height: 0x%x", get_height(image));
-        printf("\n Planes: 0x%x", get_color_planes(image));
-        printf("\n Compression: 0x%x", get_compression_method(image));
-        printf("\n ImageSize: 0x%x", get_image_size(image));
-        printf("\n Horizontal resolution: 0x%x", get_horizontal_resolution(image));
-        printf("\n Vertica resolution: 0x%x", get_vertical_resolution(image));
-        printf("\n Ncolors: 0x%x", get_ncolors(image));
-        printf("\n Important colors: 0x%x\n", get_important_colors(image));
+        printf("\n Size: 0x%x", BMP_get_info_header_size(image));
+        printf("\n Width: 0x%x", BMP_get_width(image));
+        printf("\n Height: 0x%x", BMP_get_height(image));
+        printf("\n Planes: 0x%x", BMP_get_color_planes(image));
+        printf("\n Compression: 0x%x", BMP_get_compression_method(image));
+        printf("\n ImageSize: 0x%x", BMP_get_image_size(image));
+        printf("\n Horizontal resolution: 0x%x", BMP_get_horizontal_resolution(image));
+        printf("\n Vertica resolution: 0x%x", BMP_get_vertical_resolution(image));
+        printf("\n Ncolors: 0x%x", BMP_get_ncolors(image));
+        printf("\n Important colors: 0x%x\n", BMP_get_important_colors(image));
     }
     return image;
 }
@@ -40,36 +40,36 @@ struct _BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, en
 void * init_infoheader(enum DIB_TYPES dib_type) {
     switch (dib_type) {
         default:
-        case BITMAPINFOHEADER:
-            return BMP_malloc(sizeof(struct _BITMAPINFOHEADER), "Cannot create infoheader");
+        case DIB_BITMAPINFOHEADER:
+            return BMP_malloc(sizeof(struct BITMAPINFOHEADER), "Cannot create infoheader");
             break;
 
-        case BITMAPV5HEADER:
-            return BMP_malloc(sizeof(struct _BITMAPV5HEADER), "Cannot create infoheader");
+        case DIB_BITMAPV5HEADER:
+            return BMP_malloc(sizeof(struct BITMAPV5HEADER), "Cannot create infoheader");
             break;
     }
 }
 
-void setup_infoheader(struct _BMP * image, int32_t width, int32_t height, uint16_t color_depth, enum DIB_TYPES dib_type) {
+void setup_infoheader(struct BMP * image, int32_t width, int32_t height, uint16_t color_depth, enum DIB_TYPES dib_type) {
     image -> ih  = init_infoheader(dib_type);
 
-    set_info_header_size(image);
-    set_color_planes(image, DEFAULT_COLOR_PLANE);
-    set_width(image, width);
-    set_height(image, height);
-    set_color_depth(image, color_depth);
-    set_image_size(image, get_width_in_bytes(image)*height);
+    BMP_set_info_header_size(image);
+    BMP_set_color_planes(image, DEFAULT_COLOR_PLANE);
+    BMP_set_width(image, width);
+    BMP_set_height(image, height);
+    BMP_set_color_depth(image, color_depth);
+    BMP_set_image_size(image, BMP_get_width_in_bytes(image)*height);
 }
 
-void setup_fileheader(struct _BMP * image) {
-    image -> fh = BMP_malloc(sizeof(struct _FILEHEADER), "Cannot create fileheader");
+void setup_fileheader(struct BMP * image) {
+    image -> fh = BMP_malloc(sizeof(struct FILEHEADER), "Cannot create fileheader");
     image -> fh -> signature = BMP_SIGNATURE;
-    image -> fh -> file_size = FILEHEADER_SIZE + get_info_header_size(image) + get_image_size(image);
-    image -> fh -> offset = FILEHEADER_SIZE + get_info_header_size(image);
+    image -> fh -> file_size = BMP_FILEHEADER_SIZE + BMP_get_info_header_size(image) + BMP_get_image_size(image);
+    image -> fh -> offset = BMP_FILEHEADER_SIZE + BMP_get_info_header_size(image);
 }
 
 
-void BMP_save_without_free(struct _BMP * image, const char * filename) {
+void BMP_save_without_free(struct BMP * image, const char * filename) {
     FILE * output = fopen(filename, "wb");
 
     if (!output)
@@ -77,15 +77,15 @@ void BMP_save_without_free(struct _BMP * image, const char * filename) {
         BMP_perror("Cannot create file");
     }
 
-    fwrite(image -> fh, FILEHEADER_SIZE, 1, output);
-    fwrite(image -> ih, get_info_header_size(image), 1, output);
-    fwrite(image -> pixel_data, get_image_size(image), 1, output);
+    fwrite(image -> fh, BMP_FILEHEADER_SIZE, 1, output);
+    fwrite(image -> ih, BMP_get_info_header_size(image), 1, output);
+    fwrite(image -> pixel_data, BMP_get_image_size(image), 1, output);
 
     fclose(output);
 }
 
 
-void BMP_save(struct _BMP * image, char * filename) {
+void BMP_save(struct BMP * image, char * filename) {
     BMP_save_without_free(image, filename);
     free(image -> fh);
     free(image -> ih);
@@ -93,71 +93,40 @@ void BMP_save(struct _BMP * image, char * filename) {
     free(image);
 }
 
-void BMP_set_pixel(struct _BMP * image, int row, int col, void * color)
+void BMP_set_pixel(struct BMP * image, int row, int col, void * color)
 {
-    int32_t wiB = get_width_in_bytes(image);
-    uint16_t depth = (get_color_depth(image) + 7) / 8;
+    int32_t wiB = BMP_get_width_in_bytes(image);
+    uint16_t depth = (BMP_get_color_depth(image) + 7) / 8;
     
     memcpy(image -> pixel_data + row * wiB + col * depth, color, depth);
 }
 
 
 /************** SETTERS & GETTERS ********************/ 
-int32_t get_width_in_bytes(struct _BMP * image) {
-    return ((get_width(image) * get_color_depth(image) + 31)/32)*4;
+int32_t BMP_get_width_in_bytes(struct BMP * image) {
+    return ((BMP_get_width(image) * BMP_get_color_depth(image) + 31)/32)*4;
 }
 
-int32_t get_file_header_size() {
-    return FILEHEADER_SIZE;
-}
-
-void set_info_header_size(struct _BMP * image) {
+void BMP_set_info_header_size(struct BMP * image) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *) image -> ih) -> header_size = BITMAPINFOHEADER_SIZE;
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *) image -> ih) -> header_size = DIB_BITMAPINFOHEADER_SIZE;
            break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> header_size = BITMAPV5HEADER_SIZE;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> header_size = DIB_BITMAPV5HEADER_SIZE;
            break;
         default:
            break;
     }
 }
 
-uint32_t get_info_header_size(struct _BMP * image) {
+uint32_t BMP_get_info_header_size(struct BMP * image) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *) image -> ih) -> header_size;
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *) image -> ih) -> header_size;
            break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *) image -> ih) -> header_size;
-           break;
-        default:
-           break;
-    }
-}
-
-
-void set_width(struct _BMP * image, uint32_t width) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> width = width;
-           break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> width = width;
-           break;
-        default:
-           break;
-    }
-}
-
-int32_t get_width(struct _BMP * image) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> width;
-           break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> width;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *) image -> ih) -> header_size;
            break;
         default:
            break;
@@ -165,101 +134,26 @@ int32_t get_width(struct _BMP * image) {
 }
 
 
-void set_height(struct _BMP * image, uint32_t height) {
+void BMP_set_width(struct BMP * image, uint32_t width) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> height = height;
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> width = width;
            break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> height = height;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> width = width;
            break;
         default:
            break;
     }
 }
 
-int32_t get_height(struct _BMP * image) {
+int32_t BMP_get_width(struct BMP * image) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> height;
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> width;
            break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> height;
-           break;
-        default:
-           break;
-    }
-}
-
-void set_color_planes(struct _BMP * image, uint16_t color_planes) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> color_planes = color_planes;
-           break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> color_planes = color_planes;
-           break;
-        default:
-           break;
-    }
-}
-uint16_t get_color_planes(struct _BMP * image) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> color_planes;
-           break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> color_planes;
-           break;
-        default:
-           break;
-    }
-}
-void set_color_depth(struct _BMP * image, uint16_t color_depth) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> color_depth = color_depth;
-           break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> color_depth = color_depth;
-           break;
-        default:
-           break;
-    }
-}
-uint16_t get_color_depth(struct _BMP * image) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> color_depth;
-           break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> color_depth;
-           break;
-        default:
-           break;
-    }
-}
-
-void set_compression_method(struct _BMP * image, uint32_t compression_method) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> compression_method = compression_method;
-           break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> compression_method = compression_method;
-           break;
-        default:
-           break;
-    }
-}
-
-int32_t get_compression_method(struct _BMP * image) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> compression_method;
-           break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> compression_method;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> width;
            break;
         default:
            break;
@@ -267,108 +161,101 @@ int32_t get_compression_method(struct _BMP * image) {
 }
 
 
-void set_image_size(struct _BMP * image, uint32_t image_size) {
+void BMP_set_height(struct BMP * image, uint32_t height) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> image_size = image_size;
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> height = height;
            break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> image_size = image_size;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> height = height;
            break;
         default:
            break;
     }
 }
 
-int32_t get_image_size(struct _BMP * image) {
+int32_t BMP_get_height(struct BMP * image) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> image_size;
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> height;
            break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> image_size;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> height;
            break;
         default:
            break;
     }
 }
 
-
-void set_horizontal_resolution(struct _BMP * image, uint32_t horizontal_resolution) {
+void BMP_set_color_planes(struct BMP * image, uint16_t color_planes) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> horizontal_resolution = horizontal_resolution;
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> color_planes = color_planes;
            break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> horizontal_resolution = horizontal_resolution;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> color_planes = color_planes;
+           break;
+        default:
+           break;
+    }
+}
+uint16_t BMP_get_color_planes(struct BMP * image) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> color_planes;
+           break;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> color_planes;
+           break;
+        default:
+           break;
+    }
+}
+void BMP_set_color_depth(struct BMP * image, uint16_t color_depth) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> color_depth = color_depth;
+           break;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> color_depth = color_depth;
+           break;
+        default:
+           break;
+    }
+}
+uint16_t BMP_get_color_depth(struct BMP * image) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> color_depth;
+           break;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> color_depth;
            break;
         default:
            break;
     }
 }
 
-int32_t get_horizontal_resolution(struct _BMP * image) {
+void BMP_set_compression_method(struct BMP * image, uint32_t compression_method) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> horizontal_resolution;
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> compression_method = compression_method;
            break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> horizontal_resolution;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> compression_method = compression_method;
            break;
         default:
            break;
     }
 }
 
-
-
-void set_vertical_resolution(struct _BMP * image, uint32_t vertical_resolution) {
+int32_t BMP_get_compression_method(struct BMP * image) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> vertical_resolution = vertical_resolution;
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> compression_method;
            break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> vertical_resolution = vertical_resolution;
-           break;
-        default:
-           break;
-    }
-}
-
-int32_t get_vertical_resolution(struct _BMP * image) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> vertical_resolution;
-           break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> vertical_resolution;
-           break;
-        default:
-           break;
-    }
-}
-
-
-void set_ncolors(struct _BMP * image, uint32_t ncolors) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> ncolors = ncolors;
-           break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> ncolors = ncolors;
-           break;
-        default:
-           break;
-    }
-}
-
-uint32_t get_ncolors(struct _BMP * image) {
-    switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> ncolors;
-           break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> ncolors;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> compression_method;
            break;
         default:
            break;
@@ -376,26 +263,135 @@ uint32_t get_ncolors(struct _BMP * image) {
 }
 
 
-void set_important_colors(struct _BMP * image, uint32_t important_colors) {
+void BMP_set_image_size(struct BMP * image, uint32_t image_size) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           ((struct _BITMAPINFOHEADER *)image -> ih) -> important_colors = important_colors;
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> image_size = image_size;
            break;
-        case BITMAPV5HEADER:
-           ((struct _BITMAPV5HEADER *)image -> ih) -> important_colors = important_colors;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> image_size = image_size;
            break;
         default:
            break;
     }
 }
 
-uint32_t get_important_colors(struct _BMP * image) {
+int32_t BMP_get_image_size(struct BMP * image) {
     switch (image -> dib_type) {
-        case BITMAPINFOHEADER:
-           return ((struct _BITMAPINFOHEADER *)image -> ih) -> important_colors;
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> image_size;
            break;
-        case BITMAPV5HEADER:
-           return ((struct _BITMAPV5HEADER *)image -> ih) -> important_colors;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> image_size;
+           break;
+        default:
+           break;
+    }
+}
+
+
+void BMP_set_horizontal_resolution(struct BMP * image, uint32_t horizontal_resolution) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> horizontal_resolution = horizontal_resolution;
+           break;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> horizontal_resolution = horizontal_resolution;
+           break;
+        default:
+           break;
+    }
+}
+
+int32_t BMP_get_horizontal_resolution(struct BMP * image) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> horizontal_resolution;
+           break;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> horizontal_resolution;
+           break;
+        default:
+           break;
+    }
+}
+
+
+
+void BMP_set_vertical_resolution(struct BMP * image, uint32_t vertical_resolution) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> vertical_resolution = vertical_resolution;
+           break;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> vertical_resolution = vertical_resolution;
+           break;
+        default:
+           break;
+    }
+}
+
+int32_t BMP_get_vertical_resolution(struct BMP * image) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> vertical_resolution;
+           break;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> vertical_resolution;
+           break;
+        default:
+           break;
+    }
+}
+
+
+void BMP_set_ncolors(struct BMP * image, uint32_t ncolors) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> ncolors = ncolors;
+           break;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> ncolors = ncolors;
+           break;
+        default:
+           break;
+    }
+}
+
+uint32_t BMP_get_ncolors(struct BMP * image) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> ncolors;
+           break;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> ncolors;
+           break;
+        default:
+           break;
+    }
+}
+
+
+void BMP_set_important_colors(struct BMP * image, uint32_t important_colors) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           ((struct BITMAPINFOHEADER *)image -> ih) -> important_colors = important_colors;
+           break;
+        case DIB_BITMAPV5HEADER:
+           ((struct BITMAPV5HEADER *)image -> ih) -> important_colors = important_colors;
+           break;
+        default:
+           break;
+    }
+}
+
+uint32_t BMP_get_important_colors(struct BMP * image) {
+    switch (image -> dib_type) {
+        case DIB_BITMAPINFOHEADER:
+           return ((struct BITMAPINFOHEADER *)image -> ih) -> important_colors;
+           break;
+        case DIB_BITMAPV5HEADER:
+           return ((struct BITMAPV5HEADER *)image -> ih) -> important_colors;
            break;
         default:
            break;

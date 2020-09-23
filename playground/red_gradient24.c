@@ -1,10 +1,10 @@
 #include "../BMP.c"
 
 int main() {
-    struct _BMP * image = BMP_create(255, 255, 24, 0);
+    struct BMP * image = BMP_create(255, 255, 24, 0);
 
-    int height = get_height(image);
-    int width = get_width(image);
+    int height = BMP_getheight(image);
+    int width = BMP_getwidth(image);
 
     struct Color24 color = {0};
 

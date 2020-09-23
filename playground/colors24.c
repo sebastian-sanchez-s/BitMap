@@ -1,10 +1,10 @@
 #include "../BMP.c"
 
 int main() {
-    struct _BMP * image = BMP_create(200, 200, 24, BITMAPINFOHEADER);
+    struct BMP * image = BMP_create(200, 200, 24, DIB_BITMAPINFOHEADER);
     
-    int height = get_height(image);
-    int width = get_width(image);
+    int height = BMP_get_height(image);
+    int width = BMP_get_width(image);
 
     for (int row = height-1; row >= 0; row--)
     {
