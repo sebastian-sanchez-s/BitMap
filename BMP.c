@@ -107,6 +107,11 @@ void BMP_set_pixel(struct BMP * image, int row, int col, void * color)
     memcpy(image -> pixel_data + row * wiB + col * depth, color, depth);
 }
 
+void BMP_set_background(struct BMP * image, void * color)
+{
+    memset(image -> pixel_data, *(int *) color, BMP_get_image_size(image));
+}
+
 
 /************** SETTERS & GETTERS ********************/ 
 int32_t BMP_get_width_in_bytes(struct BMP * image) {
