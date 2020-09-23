@@ -1,7 +1,7 @@
 #include <stdio.h>      // FILE
 #include <string.h>     // memset, memcpy
 
-#include "BMP.h"        // struct BMP, enum DIB_TYPES, getter declarations
+#include "BMP.h"        // struct BMP, enum DIB_TYPES, declarations, macros, etc.
 #include "BMP_lib.h"    // BMP_malloc
 
 int DEBUG = 1;
