@@ -76,12 +76,7 @@ void setup_fileheader(struct BMP * image) {
 
 
 void BMP_save_without_free(struct BMP * image, const char * filename) {
-    FILE * output = fopen(filename, "wb");
-
-    if (!output)
-    {
-        BMP_perror("Cannot create file");
-    }
+    FILE * output = BMP_open(filename, "wb");
 
     fwrite(image -> fh, BMP_FILEHEADER_SIZE, 1, output);
     fwrite(image -> ih, BMP_get_info_header_size(image), 1, output);

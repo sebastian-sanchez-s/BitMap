@@ -30,5 +30,5 @@ If some flags are use they are specified at the top comment in that file.
 ### Todo:
 * Support for BITMAPV5HEADER (gimp).
 * A way to store and read color palettes for color depth <= 8.
-* create BMP_open() and give the option to override or concatenated (ncopy) 
+* Give the option to override or concatenated (ncopy) 
   at the end of the filename.
