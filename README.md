@@ -14,15 +14,19 @@ If some flags are use they are specified at the top comment in that file.
 |struct|PascalCase|
 |enum|SNAKE_CASE|
 |constants|SNAKE_CASE|
-|functions|snake_case (prefixed with BMP_)|
+|'public' functions|BMP_snake_case|
+|'private' functions|_snake_case|
 
+> public functions are those meant to be call by the user.
+  on the other hand, private functions are meant to be call
+  by the public functions.
 
 ### Examples
 #### Red gradient in 24 bit and 16 bit.
 ![red_gradient_24bit_BITMAPINFOHEADER](playground/red_gradient24.bmp)
 ![red_gradient_16bit_BITMAPINFOHEADER](playground/red_gradient16.bmp)
 
-> You can make them the same size, but that's going to be a 7905x7095 ~ 170 MB.
+> You can make them the same size, but that's going to be a 7905x7095 ~ 120 MB.
 
 ### Currently Supported
 * BITMAPINFOHEADER with color depth of 16 bit and 24 bit.
