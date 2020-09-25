@@ -5,9 +5,6 @@ int main() {
     int width = 200;
     struct BMP * image = BMP_create(height, width, 24, DIB_BITMAPINFOHEADER);
     
-    struct Color24 white = {MAX_COLOR24, MAX_COLOR24, MAX_COLOR24};
-    BMP_set_background(image, (void *) &white);
-
     for (int row = height-1; row >= 0; row--)
     {
         for (int col = 0; col < width; col++)
@@ -22,6 +19,9 @@ int main() {
             }
             else if (row > height/2) {
                 color.blue = MAX_COLOR24;
+            }
+            else {
+                color.red = color.green = color.blue = MAX_COLOR24;
             }
             
             BMP_set_pixel(image, row, col, (void *) &color);

@@ -20,6 +20,10 @@ int main() {
             else if (row > height/2) {
                 color.blue = MAX_COLOR16;
             }
+            else 
+            {
+                color.red = color.green = color.blue = MAX_COLOR16;
+            }
             
             BMP_set_pixel(image, row, col, (void *) &color);
         }
