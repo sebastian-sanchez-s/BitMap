@@ -79,7 +79,16 @@ void BMP_set_pixel(struct BMP * image, int row, int col, void * color)
 
 void BMP_set_background(struct BMP * image, void * color)
 {
-    memset(image -> pixel_data, *(int *) color, BMP_get_image_size(image));
+    int height = BMP_get_height(image);
+    int width = BMP_get_width(image);
+
+    for (int row = height - 1; row >= 0; row--)
+    {
+        for (int col = 0; col < width; col++)
+        {
+            BMP_set_pixel(image, row, col, color);
+        }
+    }
 }
 
 // ---------------------------- Private ----------------------------------
