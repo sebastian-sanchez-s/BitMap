@@ -1,5 +1,6 @@
 void BMP_perror(const char * errmsg)
 {
-    perror(errmsg);
+    fprintf(stderr, "Error: %s", errmsg);
+    fprintf(stderr, "\nStrerr: %s", strerr(errno)); 
     exit(1);
 }
