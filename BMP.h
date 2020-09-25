@@ -24,15 +24,15 @@ struct Color24 {
 };
 
 
-/* BMP structure itself */
-#define BMP_SIGNATURE           0x4d42
+/* BMP structure */
+#define BMP_SIGNATURE               0x4d42
 #define BMP_FILEHEADER_SIZE         14
 
 #define DIB_BITMAPINFOHEADER_SIZE   40
 #define DIB_BITMAPV5HEADER_SIZE     124
 
-#define DEFAULT_COLOR_DEPTH     24
-#define DEFAULT_COLOR_PLANE     1
+#define DEFAULT_COLOR_DEPTH         24
+#define DEFAULT_COLOR_PLANE         1
 
 struct BMP {
     struct FILEHEADER * fh;
