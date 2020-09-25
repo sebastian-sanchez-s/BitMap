@@ -22,7 +22,7 @@ If some flags are use they are specified at the top comment in that file.
   by the public functions.
 
 ### Examples
-#### Red gradient in 24 bit and 16 bit.
+#### RBG Color Square in 16 and 24 bit
 ![Four color square 16 bit depth](examples/colors16.bmp)
 ![Four color square 24 bit depth](examples/colors24.bmp)
 
