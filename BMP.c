@@ -8,6 +8,8 @@
 #include "BMP_error.h"  // BMP_perror
 #include "BMP_lib.h"    // BMP_malloc, BMP_open
 
+#define DEBUG 1
+
 // *************************** DECLARATIONS ****************** 
 // ---------------------------- Public -----------------------
 struct BMP * BMP_create(int32_t, int32_t, uint16_t, enum DIB_TYPES);
@@ -73,10 +75,18 @@ static void * _init_infoheader(enum DIB_TYPES dib_type) {
     switch (dib_type) {
         default:
         case DIB_BITMAPINFOHEADER:
+            if (DEBUG)
+            {
+                printf("init BITMAPINFOHEADER");
+            }
             return BMP_malloc(sizeof(struct BITMAPINFOHEADER), "Cannot create infoheader");
             break;
 
         case DIB_BITMAPV5HEADER:
+            if (DEBUG)
+            {
+                printf("init BITMAPV5HEADER");
+            }   
             return BMP_malloc(sizeof(struct BITMAPV5HEADER), "Cannot create infoheader");
             break;
     }
