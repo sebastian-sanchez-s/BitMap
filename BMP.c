@@ -37,6 +37,7 @@ struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, enu
     image -> pixel_data = BMP_malloc(BMP_get_image_size(image), "Cannot create pixel data");
     memset(image -> pixel_data, 0, BMP_get_image_size(image));
 
+    DEBUG_PRINT("Image created.")
     return image;
 }
 
@@ -51,7 +52,7 @@ void BMP_save_without_free(struct BMP * image, const char * filename) {
 
     fclose(output);
     
-    DEBUG_PRINT("Done.")
+    DEBUG_PRINT("Image saved.")
 }
 
 
@@ -65,7 +66,7 @@ void BMP_save(struct BMP * image, const char * filename) {
     free(image -> pixel_data);
     free(image);
 
-    DEBUG_PRINT("Done.")
+    DEBUG_PRINT("Memory freed.")
 }
 
 void BMP_set_pixel(struct BMP * image, int row, int col, void * color)
@@ -112,7 +113,7 @@ static void _setup_infoheader(struct BMP * image, int32_t width, int32_t height,
     BMP_set_color_depth(image, color_depth);
     BMP_set_image_size(image, BMP_get_width_in_bytes(image)*height);
     
-    DEBUG_PRINT("Done.")
+    DEBUG_PRINT("Infoheader created.")
 }
 
 static void _setup_fileheader(struct BMP * image) {
@@ -123,6 +124,6 @@ static void _setup_fileheader(struct BMP * image) {
     image -> fh -> file_size = BMP_FILEHEADER_SIZE + BMP_get_info_header_size(image) + BMP_get_image_size(image);
     image -> fh -> offset = BMP_FILEHEADER_SIZE + BMP_get_info_header_size(image);
 
-    DEBUG_PRINT("Done.")
+    DEBUG_PRINT("Fileheader created.")
 }
 
