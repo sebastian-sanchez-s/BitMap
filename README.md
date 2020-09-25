@@ -23,8 +23,8 @@ If some flags are use they are specified at the top comment in that file.
 
 ### Examples
 #### Red gradient in 24 bit and 16 bit.
-![red_gradient_24bit_BITMAPINFOHEADER](playground/red_gradient24.bmp)
-![red_gradient_16bit_BITMAPINFOHEADER](playground/red_gradient16.bmp)
+![Four color square 16 bit depth](examples/colors16.bmp)
+![Four color square 24 bit depth](examples/colors24.bmp)
 
 > You can make them the same size, but that's going to be a 7905x7095 ~ 120 MB.
 
