@@ -26,7 +26,6 @@ If some flags are use they are specified at the top comment in that file.
 ![Four color square 16 bit depth](examples/colors16.bmp)
 ![Four color square 24 bit depth](examples/colors24.bmp)
 
-> You can make them the same size, but that's going to be a 7905x7095 ~ 120 MB.
 
 ### Currently Supported
 * BITMAPINFOHEADER with color depth of 16 bit and 24 bit.
