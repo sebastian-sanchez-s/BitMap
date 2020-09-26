@@ -71,19 +71,28 @@ void BMP_save(struct BMP * image, const char * filename) {
 
 void BMP_set_pixel(struct BMP * image, int row, int col, struct Color color)
 {
-    int32_t wiB = BMP_get_width_in_bytes(image);
-    uint16_t depth = BMP_get_color_depth(image);
+    uint16_t depth_in_bits = BMP_get_color_depth(image);
+    uint16_t depth_in_bytes = (depth_in_bits+7)/8;
+    int32_t offset = row * BMP_get_width_in_bytes(image) + col * depth_in_bytes; // pixel[row][col] 
 
-    if (depth == 24)
+    /* Sanity check*/
+    if (offset > BMP_get_image_size(image) || offset < 0)
     {
-        uint32_t true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue));
-        memcpy(image -> pixel_data + row * wiB + col * 3, &true_color, 3);
+        BMP_perror("Pixel position out of range");
     }
-    else if ( depth == 16)
+
+    uint32_t true_color;
+    /* The actual write */
+    if (depth_in_bits == 24)
     {
-        uint16_t true_color = RGB555_MASK_RED(color.red) | RGB555_MASK_GREEN(color.green) | RGB555_MASK_BLUE(color.blue);
-        memcpy(image -> pixel_data + row * wiB + col * 2, &true_color, 2);
+        true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue));
     }
+    else if (depth_in_bits == 16)
+    {
+        true_color = RGB555_MASK_RED(color.red) | RGB555_MASK_GREEN(color.green) | RGB555_MASK_BLUE(color.blue);
+    }
+    
+    memcpy(image -> pixel_data + offset, &true_color, depth_in_bytes);
 }
 
 void BMP_set_background(struct BMP * image, struct Color color)
