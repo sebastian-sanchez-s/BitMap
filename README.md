@@ -62,10 +62,11 @@ BMP_set_pixel(image, position_y, position_x, color)
 ![Bresenham circle](examples/circle.bmp)
 
 ### Currently Supported
-* DIB_BITMAPINFOHEADER with color depth of 16 bit and 24 bit.
+* DIB_BITMAPINFOHEADER with color depth of 16 bit and 24 bit and no compression (BI_RGB).
 * Only creation.
 
 ### Todo:
+* Support compression methods.
 * Support for DIB_BITMAPV5HEADER.
 * A way to store and read color palettes for color depth <= 8.
 * Give the option to override or concatenated (ncopy) 
