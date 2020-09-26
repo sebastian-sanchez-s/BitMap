@@ -138,7 +138,7 @@ static void _setup_infoheader(struct BMP * image, int32_t width, int32_t height,
     BMP_set_width(image, width);
     BMP_set_height(image, height);
     BMP_set_color_depth(image, color_depth);
-    BMP_set_image_size(image, BMP_get_width_in_bytes(image)*height);
+    BMP_set_image_size(image, BMP_get_width_in_bytes(image)*abs(height));
     
     DEBUG_PRINT("Infoheader created.")
 }
