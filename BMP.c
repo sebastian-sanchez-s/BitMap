@@ -76,8 +76,8 @@ void BMP_set_pixel(struct BMP * image, int row, int col, struct Color color)
 
     if (depth == 24)
     {
-        // Since Color are 8-8-8, we just copy those (24 bits) 3 bytes.
-        memcpy(image -> pixel_data + row * wiB + col * 3, &color, 3);
+        uint32_t true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue));
+        memcpy(image -> pixel_data + row * wiB + col * 3, &true_color, 3);
     }
     else if ( depth == 16)
     {
