@@ -9,23 +9,23 @@ int main() {
     {
         for (int col = 0; col < width; col++)
         {
-            struct Color16 color = {0};
+            struct Color color = {0};
 
             if (col > width/2 && row > height/2) {
-                color.green = MAX_COLOR16;
+                color.green = MAX_COLOR_16;
             }
             else if (col > width/2) {
-                color.red = MAX_COLOR16;
+                color.red = MAX_COLOR_16;
             }
             else if (row > height/2) {
-                color.blue = MAX_COLOR16;
+                color.blue = MAX_COLOR_16;
             }
             else 
             {
-                color.red = color.green = color.blue = MAX_COLOR16;
+                color.red = color.green = color.blue = MAX_COLOR_16;
             }
             
-            BMP_set_pixel(image, row, col, (void *) &color);
+            BMP_set_pixel(image, row, col, color);
         }
     }
 

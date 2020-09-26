@@ -8,19 +8,17 @@ enum DIB_TYPES {
 
 /* Colors LIMITS */
 
-#define MAX_COLOR16 31 
-struct Color16 {
-    unsigned int blue:5;
-    unsigned int green:5;
-    unsigned int red:5;
-    unsigned int alpha:1;
-};
+#define MAX_COLOR_24    255
+#define MAX_COLOR_16    31
 
-#define MAX_COLOR24 255 
-struct Color24 {
-    unsigned int blue:8;
-    unsigned int green:8;
-    unsigned int red:8;
+#define RGB555_MASK_RED       0x1f  // (0.000)(00.00)(000.1)(1111) ; dots mark 5-bit sets 
+#define RGB555_MASK_GREEN     0x3e  // (0.000)(00.11)(111.0)(0000) 
+#define RGB555_MASK_BLUE      0x7c  // (0.111)(11.00)(000.0)(0000) ; () mark 4.bit sets
+
+struct Color {
+    uint32_t blue;
+    uint32_t green;
+    uint32_t red;
 };
 
 

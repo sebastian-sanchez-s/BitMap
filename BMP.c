@@ -16,8 +16,8 @@
 struct BMP * BMP_create(int32_t, int32_t, uint16_t, enum DIB_TYPES);
 void BMP_save_without_free(struct BMP *, const char *);
 void BMP_save(struct BMP *, const char *);
-void BMP_set_pixel(struct BMP *, int, int, void *);
-void BMP_set_background(struct BMP *, void *);
+void BMP_set_pixel(struct BMP *, int, int, struct Color);
+void BMP_set_background(struct BMP *, struct Color); 
 // ---------------------------- Private ----------------------
 static void * _init_infoheader(enum DIB_TYPES);
 static void _setup_infoheader(struct BMP *, int32_t, int32_t, uint16_t, enum DIB_TYPES);
@@ -69,15 +69,24 @@ void BMP_save(struct BMP * image, const char * filename) {
     DEBUG_PRINT("Memory freed.")
 }
 
-void BMP_set_pixel(struct BMP * image, int row, int col, void * color)
+void BMP_set_pixel(struct BMP * image, int row, int col, struct Color color)
 {
     int32_t wiB = BMP_get_width_in_bytes(image);
-    uint16_t depth = (BMP_get_color_depth(image) + 7) / 8;
-    
-    memcpy(image -> pixel_data + row * wiB + col * depth, color, depth);
+    uint16_t depth = BMP_get_color_depth(image);
+
+    if (depth == 24)
+    {
+        // Since Color are 8-8-8, we just copy those (24 bits) 3 bytes.
+        memcpy(image -> pixel_data + row * wiB + col * 3, &color, 3);
+    }
+    else if ( depth == 16)
+    {
+        uint16_t true_color = ((color.red & RGB555_MASK_RED) << 10 | (color.green & RGB555_MASK_GREEN) << 5 | (color.blue & RGB555_MASK_BLUE));
+        memcpy(image -> pixel_data + row * wiB + col * 2, &true_color, 2);
+    }
 }
 
-void BMP_set_background(struct BMP * image, void * color)
+void BMP_set_background(struct BMP * image, struct Color color)
 {
     int height = BMP_get_height(image);
     int width = BMP_get_width(image);
