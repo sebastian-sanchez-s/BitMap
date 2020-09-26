@@ -11,9 +11,11 @@ enum DIB_TYPES {
 #define MAX_COLOR_24    255
 #define MAX_COLOR_16    31
 
-#define RGB555_MASK_RED       0x1f  // (0.000)(00.00)(000.1)(1111) ; dots mark 5-bit sets 
-#define RGB555_MASK_GREEN     0x3e  // (0.000)(00.11)(111.0)(0000) 
-#define RGB555_MASK_BLUE      0x7c  // (0.111)(11.00)(000.0)(0000) ; () mark 4.bit sets
+#define RGB555_MASK 0x1f  // (0.000)(00.00)(000.1)(1111) ; dots 5 bits set; () 4 bit set  
+
+#define RGB555_MASK_RED(x)    ((x & RGB555_MASK) << 10)
+#define RGB555_MASK_GREEN(x)  ((x & RGB555_MASK) << 5)
+#define RGB555_MASK_BLUE(x)   (x & RGB555_MASK)
 
 struct Color {
     uint32_t blue;

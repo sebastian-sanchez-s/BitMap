@@ -81,7 +81,7 @@ void BMP_set_pixel(struct BMP * image, int row, int col, struct Color color)
     }
     else if ( depth == 16)
     {
-        uint16_t true_color = ((color.red & RGB555_MASK_RED) << 10 | (color.green & RGB555_MASK_GREEN) << 5 | (color.blue & RGB555_MASK_BLUE));
+        uint16_t true_color = RGB555_MASK_RED(color.red) | RGB555_MASK_GREEN(color.green) | RGB555_MASK_BLUE(color.blue);
         memcpy(image -> pixel_data + row * wiB + col * 2, &true_color, 2);
     }
 }
