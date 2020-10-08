@@ -117,7 +117,7 @@ int main(int argc, char * argv[])
         travel = travel -> next;
     }
 
-    // DRAW BORDERS O(H*W + N) (brute force)
+    // DRAW BORDERS O(N^{H*W}) [N: points, H: img height, W: img width] (brute force)
     for (int row = height -1; row >= 0; row--)
     {
         for (int col = 0; col < width; col++)
