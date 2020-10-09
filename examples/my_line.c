@@ -57,6 +57,8 @@ void draw_midpoint(struct BMP * image, Tuple * point1, Tuple * point2, struct Co
     BMP_set_pixel(image, y, x, color);
     draw_midpoint(image, point1, mid, color);
     draw_midpoint(image, mid, point2, color);
+
+    free(mid);
 }
 
 int main(int argc, char * argv[])
@@ -94,6 +96,8 @@ int main(int argc, char * argv[])
     struct Color color = {0, 0, MAX_COLOR_16};
     draw_midpoint(image, point1, point2, color);
 
+    free(point1);
+    free(point2);
     BMP_save(image, "my_line.bmp");
     return 0;
 }
