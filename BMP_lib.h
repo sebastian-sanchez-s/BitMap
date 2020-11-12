@@ -1,7 +1,8 @@
 void * BMP_malloc(size_t size, const char * msg_failed) {
     void * bodyguard = malloc(size);
 
-    if (!bodyguard) {
+    if (!bodyguard)
+    {
         BMP_perror(msg_failed);
     }
 
