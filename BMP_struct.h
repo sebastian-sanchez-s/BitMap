@@ -14,7 +14,7 @@ struct FILEHEADER {
 struct BMP {
     struct FILEHEADER * fileheader;
     void * infoheader;                   // DIB it's determinate on creation 
-    unsigned char * pixel_data;               
+    uint8_t * pixel_data;                // 1-byte pointer arithmetic 
     enum DIB_TYPES dib_type;             // that's why we have a tracker
 };
 
