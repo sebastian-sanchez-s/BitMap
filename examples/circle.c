@@ -28,14 +28,13 @@ int main(int argc, char * argv[])
     // image properties
     int height = 1000;
     int width = 1000;
-    int center = height/2;
-    int resolution = 96*2000;
+    //int resolution = 96*2000;
 
     // image creation
     struct BMP * image = BMP_create(height, width, 16, 0);
 
-    BMP_set_horizontal_resolution(image, resolution);
-    BMP_set_vertical_resolution(image, resolution);
+    //BMP_set_horizontal_resolution(image, resolution);
+    //BMP_set_vertical_resolution(image, resolution);
 
     // grid
     struct Color grid = {MAX_COLOR_16/4, 0, 0};
