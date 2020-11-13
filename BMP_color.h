@@ -14,12 +14,9 @@
 #define RGB888_MASK_GREEN(x)    ((x & RGB888_MASK) << 8)
 #define RGB888_MASK_BLUE(x)     ((x & RGB888_MASK))
 
-#pragma pack(push, 1)
-
 struct Color {
     uint32_t blue;
     uint32_t green;
     uint32_t red;
 };
 
-#pragma pack(push, 1)
