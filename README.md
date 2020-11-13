@@ -47,12 +47,8 @@ BMP_set_pixel(image, position_y, position_x, color)
 |struct|PascalCase|
 |enum|SNAKE_CASE|
 |constants|SNAKE_CASE|
-|'public' functions|BMP_snake_case|
-|'private' functions|_snake_case|
+|functions|BMP_snake_case|
 
-> public functions are those meant to be call by the user.
-  on the other hand, private functions are meant to be call
-  by the public functions.
 
 ### Examples
 #### RBG Color Square in 16 and 24 bit
@@ -62,13 +58,12 @@ BMP_set_pixel(image, position_y, position_x, color)
 ![Bresenham circle](examples/circle.bmp)
 
 ### Currently Supported
-* DIB_BITMAPINFOHEADER with color depth of 16 bit and 24 bit and no compression (BI_RGB).
-* Only creation.
+* BITMAPINFOHEADER (and share parts with BITMAPV5HEADER) with color depth of 16 bit and 24 bit with no compression (BI_RGB).
+* Creation only.
 
 ### Todo:
+* Full Support for BITMAPV5HEADER.
+* Support color depth <= 8.
 * Support compression methods.
-* Support for DIB_BITMAPV5HEADER.
-* A way to store and read color palettes for color depth <= 8.
-* Give the option to override or concatenated (ncopy) 
-  at the end of the filename.
+* Give the option to override the image or duplicate.
 * Read images.
