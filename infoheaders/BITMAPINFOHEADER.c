@@ -81,7 +81,16 @@ uint16_t BITMAPINFOHEADER_get_color_depth(void * f)
     return ((struct BITMAPINFOHEADER *) f) -> color_depth;
 }
 
-// TODO: COMPRESSION METHOD
+// COMPRESSION METHOD
+void BITMAPINFOHEADER_set_compression_method(void * f, uint32_t c)
+{
+    ((struct BITMAPINFOHEADER *) f) -> compression_method = c;
+}
+
+uint32_t BITMAPINFOHEADER_get_compression_method(void * f)
+{
+    return ((struct BITMAPINFOHEADER *) f) -> compression_method;
+}
 
 // IMAGE SIZE
 void BITMAPINFOHEADER_set_image_size(void * f, uint32_t s)
@@ -127,4 +136,13 @@ uint32_t BITMAPINFOHEADER_get_ncolors(void * f)
     return ((struct BITMAPINFOHEADER *) f) -> ncolors;
 }
 
-// TODO: IMPORTANT COLORS
+// IMPORTANT COLORS
+void BITMAPINFOHEADER_set_important_colors(void * f, uint32_t ic)
+{
+    ((struct BITMAPINFOHEADER *) f) -> important_colors = ic;
+}
+
+uint32_t BITMAPINFOHEADER_get_important_colors(void * f)
+{
+    return ((struct BITMAPINFOHEADER *) f) -> important_colors;
+}
