@@ -1,7 +1,5 @@
 #define DIB_BITMAPV5HEADER_SIZE     124
 
-#pragma pack(push, 1)
-
 struct BITMAPV5HEADER {
     uint32_t header_size;
     int32_t  width;
@@ -36,9 +34,6 @@ struct BITMAPV5HEADER {
   	uint32_t profile_data_size;
   	uint32_t reserved;
 };
-
-
-#pragma pack(push, 1)
 
 
 // INITIALIZER
@@ -104,7 +99,16 @@ uint16_t BITMAPV5HEADER_get_color_depth(void * f)
     return ((struct BITMAPV5HEADER *) f) -> color_depth;
 }
 
-// TODO: COMPRESSION METHOD
+// COMPRESSION METHOD
+void BITMAPV5HEADER_set_compression_method(void * f, uint32_t cm)
+{
+    ((struct BITMAPV5HEADER *) f) -> compression_method = cm;
+}
+
+uint32_t BITMAPV5HEADER_get_compression_method(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> compression_method;
+}
 
 // IMAGE SIZE
 void BITMAPV5HEADER_set_image_size(void * f, uint32_t s)
@@ -150,4 +154,69 @@ uint32_t BITMAPV5HEADER_get_ncolors(void * f)
     return ((struct BITMAPV5HEADER *) f) -> ncolors;
 }
 
-// TODO: IMPORTANT COLORS
+// IMPORTANT COLORS
+void BITMAPV5HEADER_set_important_colors(void * f, uint32_t ic)
+{
+    ((struct BITMAPV5HEADER *) f) -> important_colors = ic;
+}
+
+uint32_t BITMAPV5HEADER_get_important_colors(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> important_colors;
+}
+
+// MASK RED
+void BITMAPV5HEADER_set_mask_red(void * f, uint32_t m)
+{
+    ((struct BITMAPV5HEADER *) f) -> mask_red = m;
+}
+
+uint32_t BITMAPV5HEADER_get_mask_red(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> mask_red; 
+}
+
+// MASK GREEN 
+void BITMAPV5HEADER_set_mask_green(void * f, uint32_t m)
+{
+    ((struct BITMAPV5HEADER *) f) -> mask_green = m;
+}
+
+uint32_t BITMAPV5HEADER_get_mask_green(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> mask_green; 
+}
+
+// MASK BLUE 
+void BITMAPV5HEADER_set_mask_blue(void * f, uint32_t m)
+{
+    ((struct BITMAPV5HEADER *) f) -> mask_blue = m;
+}
+
+uint32_t BITMAPV5HEADER_get_mask_blue(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> mask_blue; 
+}
+
+
+// MASK ALPHA 
+void BITMAPV5HEADER_set_mask_alpha(void * f, uint32_t m)
+{
+    ((struct BITMAPV5HEADER *) f) -> mask_alpha = m;
+}
+
+uint32_t BITMAPV5HEADER_get_mask_alpha(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> mask_alpha; 
+}
+
+// COLOR SPACE
+void BITMAPV5HEADER_set_color_space(void * f, uint32_t cs)
+{
+    ((struct BITMAPINFOHEADER *) f) -> color_space = cs;
+}
+
+uint32_t BITMAPV5HEADER_set_color_space(void * f)
+{
+    return ((struct BITMAPV5HEADER *) f) -> color_space;
+}
