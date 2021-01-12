@@ -31,10 +31,11 @@ struct Color some_color = {0};          /* {0} avoids noise (unwante level of so
 some_color.red = some_red_value;
 some_color.blue = some_blue_value;
 some_color.green = some_green_value;
+some_color.alppha = some_alpha_value    /* this will be applied only if the color depth is 32 bit */
 ```
 > * 16 bit: RGB555 range between 0 and 31   (2^{5}-1).
 > * 24 bit: RGB888 range between 0 and 255  (2^{8}-1).
-
+> * 32 bit: same as 24 bit, it has alpha channel.
 After creating a color, to draw a pixel you use:
 
 ```C
@@ -57,13 +58,25 @@ BMP_set_pixel(image, position_y, position_x, color)
 #### A circle using Bresenham's algorithm
 ![Bresenham circle](examples/circle.bmp)
 
-### Currently Supported
-* BITMAPINFOHEADER (and share parts with BITMAPV5HEADER) with color depth of 16 bit and 24 bit with no compression (BI_RGB).
-* Creation only.
-
-### Todo:
-* Full Support for BITMAPV5HEADER.
-* Support color depth <= 8.
-* Support compression methods.
-* Give the option to override the image or duplicate.
-* Read images.
+### To-do:
+1. Support infoheaders 
+  - BITMAPINFOHEADER
+    + Color depths:
+      * [-] < 8 bit
+      * [x] 16 bit
+      * [x] 24 bit
+      * [x] 32 bit 
+    + Compression:
+      * [x] BI_RGB (no compression)
+  - BITMAPV5HEADER
+    + Color depths:
+      * [-] < 8 bit
+      * [x] 16 bit
+      * [x] 24 bit
+      * [x] 32 bit 
+    + Compression:
+      * [x] BI_RGB (no compression)
+1. idk how to label this
+  - [-] Give the option to override the image or duplicate.
+  - [x] Create images.
+  - [-] Read images.
