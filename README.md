@@ -36,6 +36,7 @@ some_color.alpha = some_alpha_value    /* this will be applied only if the color
 > * 16 bit: RGB555 range between 0 and 31   (2^{5}-1).
 > * 24 bit: RGB888 range between 0 and 255  (2^{8}-1).
 > * 32 bit: same as 24 bit, it has alpha channel.
+
 After creating a color, to draw a pixel you use:
 
 ```C
