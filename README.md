@@ -31,7 +31,7 @@ struct Color some_color = {0};          /* {0} avoids noise (unwante level of so
 some_color.red = some_red_value;
 some_color.blue = some_blue_value;
 some_color.green = some_green_value;
-some_color.alppha = some_alpha_value    /* this will be applied only if the color depth is 32 bit */
+some_color.alpha = some_alpha_value    /* this will be applied only if the color depth is 32 bit */
 ```
 > * 16 bit: RGB555 range between 0 and 31   (2^{5}-1).
 > * 24 bit: RGB888 range between 0 and 255  (2^{8}-1).
@@ -76,7 +76,7 @@ BMP_set_pixel(image, position_y, position_x, color)
       * [x] 32 bit 
     + Compression:
       * [x] BI_RGB (no compression)
-1. idk how to label this
+2. idk how to label this
   - [-] Give the option to override the image or duplicate.
   - [x] Create images.
   - [-] Read images.
