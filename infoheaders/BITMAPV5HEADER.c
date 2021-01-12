@@ -213,10 +213,10 @@ uint32_t BITMAPV5HEADER_get_mask_alpha(void * f)
 // COLOR SPACE
 void BITMAPV5HEADER_set_color_space(void * f, uint32_t cs)
 {
-    ((struct BITMAPINFOHEADER *) f) -> color_space = cs;
+    ((struct BITMAPV5HEADER *) f) -> color_space = cs;
 }
 
-uint32_t BITMAPV5HEADER_set_color_space(void * f)
+uint32_t BITMAPV5HEADER_get_color_space(void * f)
 {
     return ((struct BITMAPV5HEADER *) f) -> color_space;
 }
