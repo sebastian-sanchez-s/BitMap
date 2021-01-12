@@ -126,12 +126,11 @@ void BMP_set_pixel(struct BMP * image, int row, int col, struct Color color)
 
     uint32_t true_color;
     /* The actual write */
-    if (depth_in_bits == 24)
-    {
+    if (depth_in_bits == 32) {
+        true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue)) | (RGB888_MASK_ALPHA(color.alpha));
+    } else if (depth_in_bits == 24) {
         true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue));
-    }
-    else if (depth_in_bits == 16)
-    {
+    } else if (depth_in_bits == 16) {
         true_color = RGB555_MASK_RED(color.red) | RGB555_MASK_GREEN(color.green) | RGB555_MASK_BLUE(color.blue);
     }
 
