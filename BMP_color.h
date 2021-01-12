@@ -12,7 +12,7 @@
 /* RGB888 */
 #define RGB888_MASK             0xff
 #define RGB888_MASK_ALPHA(x)    ((x & RGB888_MASK))
-#define RGB888_MASK_BLUE(x)     ((x & RGB888_MASK  << 8))
+#define RGB888_MASK_BLUE(x)     ((x & RGB888_MASK) << 8)
 #define RGB888_MASK_GREEN(x)    ((x & RGB888_MASK) << 16)
 #define RGB888_MASK_RED(x)      ((x & RGB888_MASK) << 24)
 

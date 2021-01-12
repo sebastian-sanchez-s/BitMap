@@ -130,6 +130,7 @@ void BMP_set_pixel(struct BMP * image, int row, int col, struct Color color)
         true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue)) | (RGB888_MASK_ALPHA(color.alpha));
     } else if (depth_in_bits == 24) {
         true_color = RGB888_MASK_RED(color.red) | RGB888_MASK_GREEN(color.green) | (RGB888_MASK_BLUE(color.blue));
+        true_color >>= 8; // compensate the alpha channel of 32-bit
     } else if (depth_in_bits == 16) {
         true_color = RGB555_MASK_RED(color.red) | RGB555_MASK_GREEN(color.green) | RGB555_MASK_BLUE(color.blue);
     }
