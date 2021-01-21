@@ -25,7 +25,7 @@ struct Color {
 
 
 struct Color * add_colors(struct Color a, struct Color b) {
-    struct Color * ab = BMP_malloc(sizeof(struct Color));
+    struct Color * ab = BMP_malloc(sizeof(struct Color), "Cannot add colors\n");
 
     ab->red = a.red + b.red;
     ab->blue = a.blue + b.blue;
