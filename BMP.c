@@ -1,3 +1,12 @@
+/* This is the main program, it sticks together all
+ * the other files and dependencies.
+ * 
+ * Here you will find the functions that serves
+ * as API for the programmer/user as well as common
+ * functionalities.
+ *
+ * */
+
 #include <stdio.h>          // FILE, fprintf family
 #include <stdint.h>         // intXX, uintXX
 #include <string.h>         // memset, memcpy, perror
