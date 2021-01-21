@@ -9,7 +9,7 @@
 #include "BMP_infoheader.h" // Infoheader init and functions pointers
 #include "BMP_struct.h"     // Format definition
 #include "BMP_setters_getters.h" // Contains BMP_set.., and BMP_get..
-#include "BMP_color.h"      // Color struct, Bitfields and sizes.
+#include "BMP_color.h"      // Color struct and its methods, Bitfields and sizes.
 
 
 #define DEBUG 1
