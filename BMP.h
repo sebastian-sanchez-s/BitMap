@@ -10,6 +10,8 @@
 
 enum DIB_TYPES {BITMAPINFOHEADER, BITMAPV5HEADER};
 
+#pragma pack(push, 1)
+
 struct FILEHEADER {
     uint16_t signature; 
     uint32_t file_size; 
@@ -25,6 +27,7 @@ struct BMP {
     enum DIB_TYPES dib_type;             // that's why we have a tracker
 };
 
+#pragma pack(push, 1)
 
 /*******************************************
  ************ PRIMITIVE FUNCTIONS **********
