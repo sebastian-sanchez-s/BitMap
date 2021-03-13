@@ -54,12 +54,14 @@ struct BMP * BMP_create(int32_t width, int32_t height, uint16_t color_depth, enu
     DEBUG_PRINT("Creating image")
 
     struct BMP * image = BMP_malloc(sizeof(struct BMP), "Cannot create image");
+
     image -> dib_type = dib_type;
 
     setup_infoheader(image, width, height, color_depth);
     setup_fileheader(image);
 
     image -> pixel_data = BMP_malloc(BMP_get_image_size(image), "Cannot create pixel data");
+
     memset(image -> pixel_data, 0, BMP_get_image_size(image));
 
     DEBUG_PRINT("Image created.")

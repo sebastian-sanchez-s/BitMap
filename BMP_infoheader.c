@@ -1,9 +1,3 @@
-/* This file contains declarations of functions pointers for setters and getters
- * of each infoheader format.
- * Along with enum DIB_TYPE it provides an easy way to access especific format
- * as well as inserting new ones.
- */
-
 #include <stdint.h>
 #include <string.h>
 
