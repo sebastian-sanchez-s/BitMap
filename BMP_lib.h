@@ -1,22 +1,10 @@
-void * BMP_malloc(size_t size, const char * msg_failed) {
-    void * bodyguard = malloc(size);
+#ifndef BMP_LIB_H
+#define BMP_LIB_H
 
-    if (!bodyguard)
-    {
-        BMP_perror(msg_failed);
-    }
+#include <stddef.h>
 
-    return bodyguard;
-}
+void * BMP_malloc(size_t size, const char * msg_failed);
 
-void * BMP_open(const char * filename, const char * mode)
-{
-    FILE * file = fopen(filename, mode);
+void * BMP_open(const char * filename, const char * mode);
 
-    if (!file)
-    {
-        BMP_perror("Coudn't create file");
-    }
-
-    return file;
-}
+#endif

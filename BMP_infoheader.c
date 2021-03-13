@@ -4,11 +4,13 @@
  * as well as inserting new ones.
  */
 
+#include <stdint.h>
+#include <string.h>
+
+#include "BMP_lib.h"
+
 #include "infoheaders/BITMAPINFOHEADER.c"
 #include "infoheaders/BITMAPV5HEADER.c"
-
-enum DIB_TYPES {BITMAPINFOHEADER, BITMAPV5HEADER};
-
 
 // INIT INFOHEADER
 

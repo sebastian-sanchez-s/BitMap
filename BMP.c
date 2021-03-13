@@ -1,24 +1,12 @@
-/* This is the main program, it sticks together all
- * the other files and dependencies.
- * 
- * Here you will find the functions that serves
- * as API for the programmer/user as well as common
- * functionalities.
- *
- * */
 
 #include <stdio.h>          // FILE, fprintf family
-#include <stdint.h>         // intXX, uintXX
-#include <string.h>         // memset, memcpy, perror
-#include <stdlib.h>         // malloc, exit
-#include <errno.h>          // errno
+#include <stdint.h>         // intXX
+#include <stdlib.h>         // free
 
+#include "BMP.h"
 #include "BMP_error.h"      // BMP_perror
 #include "BMP_lib.h"        // BMP_malloc, BMP_open
-#include "BMP_infoheader.h" // Infoheader init and functions pointers
-#include "BMP_struct.h"     // Format definition
-#include "BMP_setters_getters.h" // Contains BMP_set.., and BMP_get..
-#include "BMP_color.h"      // Color struct and its methods, Bitfields and sizes.
+#include "BMP_infoheader.c"
 
 
 #define DEBUG 1
@@ -31,7 +19,7 @@ uint32_t width_in_bytes(struct BMP * image)
 }
 
 
-static void setup_fileheader(struct BMP * image)
+void setup_fileheader(struct BMP * image)
 {
     DEBUG_PRINT("Setup fileheader...")
 
@@ -45,7 +33,7 @@ static void setup_fileheader(struct BMP * image)
 }
 
 
-static void setup_infoheader(struct BMP * image, int32_t width, int32_t height, uint16_t color_depth)
+void setup_infoheader(struct BMP * image, int32_t width, int32_t height, uint16_t color_depth)
 {
     DEBUG_PRINT("Setup infoheader...")
 
@@ -160,4 +148,65 @@ void BMP_set_background(struct BMP * image, struct Color color)
             BMP_set_pixel(image, row, col, color);
         }
     }
+}
+
+
+/***************************************************************
+ *************** SETTERS AND GETTERS ***************************
+ ***************************************************************/
+
+int32_t BMP_get_infoheader_size(struct BMP * image)
+{
+    return (_get_header_size[image->dib_type])(image->infoheader);
+}
+
+void BMP_set_width(struct BMP * image, int32_t width)
+{
+    (_set_width[image->dib_type])(image->infoheader, width);
+}
+
+uint32_t BMP_get_width(struct BMP * image)
+{
+    return (_get_width[image->dib_type])(image->infoheader);
+}
+
+void BMP_set_height(struct BMP * image, int32_t height)
+{
+    (_set_height[image->dib_type])(image->infoheader, height);
+}
+
+uint32_t BMP_get_height(struct BMP * image)
+{
+    return (_get_height[image->dib_type])(image->infoheader);
+}
+
+void BMP_set_color_planes(struct BMP * image, uint16_t planes)
+{
+    (_set_color_planes[image->dib_type])(image->infoheader, planes);
+}
+
+uint16_t BMP_get_color_planes(struct BMP * image)
+{
+    return (_get_color_planes[image->dib_type])(image->infoheader);
+}
+
+
+void BMP_set_color_depth(struct BMP * image, uint16_t depth)
+{
+    (_set_color_depth[image->dib_type])(image->infoheader, depth);
+}
+
+uint16_t BMP_get_color_depth(struct BMP * image)
+{
+    return (_get_color_depth[image->dib_type])(image->infoheader);
+}
+
+void BMP_set_image_size(struct BMP * image, uint32_t size)
+{
+    (_set_image_size[image->dib_type])(image->infoheader, size);
+}
+
+uint32_t BMP_get_image_size(struct BMP * image)
+{
+    return (_get_image_size[image->dib_type])(image->infoheader);
 }
