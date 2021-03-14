@@ -1,16 +1,7 @@
 # BitMap
 A simple library to create bmp images. Aimed to my learning process of image processing.
 
-### Use
-Include the all the BMP_<something>.h and BMP.c in the same or in an isolated directory.
-Let it be the BMP directory, then on the script you want to use it write at the top:
-
-```C
-#include "BMP/BMP.c"
-```
-
-> BMP.c includes the following standard libraries: stdin, stdlib, stdint, errno and string.
-
+### Usage
 To create Images use
 
 ```C
@@ -54,10 +45,7 @@ BMP_set_pixel(image, position_y, position_x, color)
 
 ### Examples
 #### RBG Color Square in 16 and 24 bit
-![Four color square 16 bit depth](examples/colors16.bmp)
-![Four color square 24 bit depth](examples/colors24.bmp)
-#### A circle using Bresenham's algorithm
-![Bresenham circle](examples/circle.bmp)
+![Tones of RGB with 16 bit depth using RGB555](examples/palette_16.bmp)
 
 ### To-do:
 1. Support infoheaders 
