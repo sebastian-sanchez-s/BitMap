@@ -2,6 +2,7 @@
 #define BMP_COLOR_H
 
 #include <stdint.h>
+#include <stdarg.h>
 
 /* COLOR MACROS */
 #define MAX_COLOR_32    255
@@ -29,6 +30,6 @@ struct Color {
 };
 
 
-struct Color * add_colors(struct Color a, struct Color b);
+struct Color * BMP_add_colors(struct Color *, int, struct Color, ...);
 
 #endif
