@@ -30,6 +30,7 @@ struct Color {
 };
 
 
-struct Color * BMP_add_colors(struct Color *, int, struct Color, ...);
+struct Color * BMP_color_add(struct Color *, int, struct Color, ...);
+struct Color * BMP_color_complement(struct Color *, struct Color);
 
 #endif

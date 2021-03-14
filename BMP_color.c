@@ -2,7 +2,7 @@
 #include "BMP_color.h"
 #include "BMP_lib.h"
 
-struct Color * BMP_add_colors(struct Color * result, int nadding, struct Color add_1, ...) {
+struct Color * BMP_color_add(struct Color * result, int nadding, struct Color add_1, ...) {
     va_list colors_add;
 
     result -> red = 0;
@@ -21,6 +21,14 @@ struct Color * BMP_add_colors(struct Color * result, int nadding, struct Color a
     }
 
     va_end(colors_add);
+
+    return result;
+}
+
+struct Color * BMP_color_complement(struct Color * result, struct Color color) {
+    result -> red = ~color.red;
+    result -> green = ~color.green;
+    result -> blue = ~color.blue;
 
     return result;
 }
