@@ -27,7 +27,7 @@ struct BMP {
     enum DIB_TYPES dib_type;             // that's why we have a tracker
 };
 
-#pragma pack(push, 1)
+#pragma pack(pop)
 
 /*******************************************
  ************ PRIMITIVE FUNCTIONS **********

@@ -1,5 +1,7 @@
 #define DIB_BITMAPINFOHEADER_SIZE   40
 
+#pragma pack(push, 1)
+
 struct BITMAPINFOHEADER {
     uint32_t header_size;
     int32_t  width;
@@ -13,6 +15,7 @@ struct BITMAPINFOHEADER {
     uint32_t ncolors;
     uint32_t important_colors;
 };
+#pragma pack(pop)
 
 
 // INITIALIZER

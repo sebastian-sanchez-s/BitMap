@@ -1,5 +1,7 @@
 #define DIB_BITMAPV5HEADER_SIZE     124
 
+#pragma pack(push, 1)
+
 struct BITMAPV5HEADER {
     uint32_t header_size;
     int32_t  width;
@@ -35,7 +37,7 @@ struct BITMAPV5HEADER {
   	uint32_t reserved;
 };
 
-
+#pragma pack(pop)
 // INITIALIZER
 void * BITMAPV5HEADER_init()
 {
