@@ -1,10 +1,27 @@
+#ifndef BMP_INFOHEADER
+#define BMP_INFOHEADER
+
 #include <stdint.h>
 #include <string.h>
 
+#include "BMP.h" 
 #include "BMP_lib.h"
 
 #include "infoheaders/BITMAPINFOHEADER.c"
 #include "infoheaders/BITMAPV5HEADER.c"
+
+
+int _get_infoheader_with_size(size_t size){
+    switch(size)
+    {
+        case DIB_BITMAPINFOHEADER_SIZE:
+            return BITMAPINFOHEADER;
+        case DIB_BITMAPV5HEADER_SIZE:
+            return BITMAPV5HEADER;
+        default:
+            return -1;
+    }
+};
 
 // INIT INFOHEADER
 
@@ -74,3 +91,5 @@ uint32_t (*_get_image_size[])(void *) = {
     BITMAPINFOHEADER_get_image_size,
     BITMAPV5HEADER_get_image_size,
 };
+
+#endif

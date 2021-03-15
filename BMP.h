@@ -32,6 +32,7 @@ struct BMP {
 /*******************************************
  ************ PRIMITIVE FUNCTIONS **********
  *******************************************/
+struct BMP * BMP_read_from_file(const char *); 
 
 uint32_t width_in_bytes(struct BMP * image);
 

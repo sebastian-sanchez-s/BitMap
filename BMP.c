@@ -1,4 +1,3 @@
-
 #include <stdio.h>          // FILE, fprintf family
 #include <stdint.h>         // intXX
 #include <stdlib.h>         // free
@@ -11,6 +10,58 @@
 
 #define DEBUG 1
 #define DEBUG_PRINT(x) if (DEBUG) {printf("%s\n", x);}
+
+struct BMP * BMP_read_from_file(const char * filename) {
+    FILE * file = BMP_open(filename, "rb");
+
+    struct BMP * image = BMP_malloc(sizeof(struct BMP),  "Couldn't create image");
+    
+    /* fileheader */ 
+    image -> fileheader = BMP_malloc(sizeof(struct FILEHEADER), "Couldn't create fileheader");
+
+    size_t ret = fread(image -> fileheader, BMP_FILEHEADER_SIZE, 1, file); 
+
+    if (!ret)
+    {
+        BMP_perror("Couldn't read fileheader\n");
+    }
+    
+
+    /* infoheader */
+    size_t dib_size = image -> fileheader -> offset - BMP_FILEHEADER_SIZE;
+    
+    image -> dib_type = _get_infoheader_with_size(dib_size);
+
+    if (image -> dib_type == -1)
+    {
+        BMP_perror("Infoheader not valid\n");
+    }
+
+    image -> infoheader = (*init_infoheader[image->dib_type])();
+    
+    ret = fread(image -> infoheader, dib_size, 1, file);
+
+    if (!ret)
+    {
+        BMP_perror("Couldn't read infoheader\n");
+    }
+
+    /* pixel data */
+    int32_t image_size = BMP_get_image_size(image);
+    
+    image -> pixel_data = BMP_malloc(image_size, "Coulnd't allocate pixel data");
+
+    ret = fread(image -> pixel_data, image_size, 1, file); 
+
+    if (!ret)
+    {
+        BMP_perror("Couldn't read pixel data\n");
+    }
+
+    fclose(file);
+
+    return image;
+}
 
 
 uint32_t width_in_bytes(struct BMP * image)
