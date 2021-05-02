@@ -6,10 +6,6 @@
 #include "BMP.h"
 
 
-double distance(int y1, int x1, int y2, int x2) {
-    return sqrt(pow(abs(y1 - y2), 2) + pow(abs(x1 - x2), 2));
-}
-
 int main(int argc, char * argv[]) {
     int height = 1000;
     int width = 1000;
@@ -22,7 +18,8 @@ int main(int argc, char * argv[]) {
 
     for (int row = 0; row < height; row++) {
         for (int col = 0; col < width; col++) {
-            complex c = ((-row + height / 2) / 100.0) * I + (col - width / 2) / 100.0; 
+            complex c = ((-row + height / 2) / 300.0) * I + (col - width / 2) / 300.0 -0.75; 
+
             z = argc == 2 ? atof(argv[1]): 0;
             z += argc == 3 ? atof(argv[2])*I: 0;
 
