@@ -56,6 +56,8 @@ struct BMP * image = BMP_read_from_file(filename);
 ### Examples
 #### RBG Color Square in 16 and 24 bit
 ![Tones of RGB with 16 bit depth using RGB555](examples/palette_16.bmp)
+#### The mandelbrot set centered at 0
+![Mandelbrot set](examples/mandelbrot.bmp)
 
 ### To-do:
 1. Support infoheaders 
