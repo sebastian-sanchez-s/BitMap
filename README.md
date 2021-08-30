@@ -54,7 +54,7 @@ struct BMP * image = BMP_read_from_file(filename);
 
 
 ### Examples
-#### RBG Color Square in 16 and 24 bit
+#### RBG Color Square in 16 bit depth
 ![Tones of RGB with 16 bit depth using RGB555](examples/colors_16.bmp)
 #### The mandelbrot set 
 ![Mandelbrot set](examples/mandelbrot.bmp)
